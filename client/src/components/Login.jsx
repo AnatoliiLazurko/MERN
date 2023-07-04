@@ -5,7 +5,7 @@ const Login = () => {
         <div>
             <h1>Login</h1>
             <div>
-                
+                <form action=""></form>
             </div>
         </div>
     );
