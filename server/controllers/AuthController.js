@@ -8,13 +8,13 @@ const login = async (req, res) => {
 
     let user = await User.findOne({ email });
     if (!user) {
-        return res.status(400).json({massege: "User not found"});
+        return res.status(400).json({message: "User not found"});
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-        return res.status(400).json({massege: "Password incorrect"});
+        return res.status(400).json({message: "Password incorrect"});
     }
 
     jwt.sign({

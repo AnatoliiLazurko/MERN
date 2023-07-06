@@ -4,6 +4,7 @@ import React from 'react';
 import './login.css';
 import { Link } from 'react-router-dom';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
+import useAuth from '../hooks/useAuth';
 
 const initialValues = {
     email: '',
@@ -18,7 +19,16 @@ const LOGIN_SCHEMA = Yup.object().shape({
 
 const Login = () => {
 
+    const { login } = useAuth();
+
     const submitHandler = (values, formikBag) => {
+        try {
+            login({ email: values.email, password: values.password });
+        }
+        catch (error) {
+            console.log(error);
+        }
+
         formikBag.resetForm();
     }
 
@@ -51,7 +61,7 @@ const Login = () => {
                     <Field type="submit" value="Login" id="login"/>
                 </Form>
             </Formik>
-
+            
         </div>
     );
 }

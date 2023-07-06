@@ -3,11 +3,13 @@ import * as Yup from 'yup';
 import React from 'react';
 import SensorOccupiedIcon from '@mui/icons-material/SensorOccupied';
 import { Link } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
 const initialValues = {
     email: '',
     username: '',
     password: '',
+    confirm_password: '',
 };
 
 const SIGNUP_SCHEMA = Yup.object().shape({
@@ -19,7 +21,15 @@ const SIGNUP_SCHEMA = Yup.object().shape({
 
 const Signup = () => {
 
+    const { register } = useAuth();
+
     const submitHandler = (values, formikBag) => {
+        try {
+            register({ email: values.email, password: values.password, username: values.username });
+        }
+        catch (error) {
+            console.log(error);
+        }
         formikBag.resetForm();
     }
 
@@ -32,7 +42,6 @@ const Signup = () => {
                 validationSchema={SIGNUP_SCHEMA}
             >
                 <Form className='form-login'>
-                    {/* <i className='fa fa-group'></i> */}
                     <SensorOccupiedIcon />
                     <h1>Sign up</h1>
 
@@ -55,8 +64,8 @@ const Signup = () => {
                     </div>
 
                     <div>
-                        <p className='label'>Confirm password</p>
-                        <Field type="password" name="confirm_password" placeholder="Confirm password" className='input-field'/>
+                        <p className='label'>Password confirm</p>
+                        <Field type="password" name="confirm_password" placeholder="Enter password" className='input-field'/>
                         <ErrorMessage name='confirm_password' component="p" className='error'/>
                     </div>
 

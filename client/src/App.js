@@ -4,7 +4,9 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Header from './components/Header';
-import AuthProvider from './contexts/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
+import GuestGuard from './guards/GuestGuard';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -13,7 +15,7 @@ function App() {
         <Header />
       
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<GuestGuard><Home /></GuestGuard>} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
