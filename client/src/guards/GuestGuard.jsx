@@ -3,9 +3,9 @@ import useAuth from '../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 
 const GuestGuard = ({ children }) => {
-    const { isAuth } = useAuth();
+    const { isAuth, status } = useAuth();
 
-    if (!isAuth) {
+    if (!isAuth && status !== null) {
         return <Navigate to="/login" />
     }
 

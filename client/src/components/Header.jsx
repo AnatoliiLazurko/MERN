@@ -12,11 +12,12 @@ const Header = () => {
         <>
             <header>
                 <NavLink to="/">Home</NavLink>
-                {isAuth ? <NavLink to="/" onClick={() => logout()}>Logout</NavLink> :
+                {isAuth ? <NavLink to="/" onClick={logout}>Logout</NavLink> :
                 <>
                     <NavLink to="/login">Login</NavLink>
                     <NavLink to="/signup">SingUp</NavLink>
                     </>}
+                <NavLink to="/users">Users</NavLink>
             </header>
             <ToastContainer></ToastContainer>
         </>

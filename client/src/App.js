@@ -7,19 +7,25 @@ import Header from './components/Header';
 import { AuthProvider } from './contexts/AuthContext';
 import GuestGuard from './guards/GuestGuard';
 import 'react-toastify/dist/ReactToastify.css';
+import { Provider } from 'react-redux';
+import { store } from './app/store';
+import Users from './components/users/Users';
 
 function App() {
   return (
     <div>
-      <AuthProvider>
-        <Header />
+      <Provider store={store}>
+        <AuthProvider>
+          <Header />
       
-        <Routes>
-          <Route path="/" element={<GuestGuard><Home /></GuestGuard>} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-        </Routes>
-      </AuthProvider>
+          <Routes>
+            <Route path="/" element={<GuestGuard><Home /></GuestGuard>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/users" element={<Users />} />
+          </Routes>
+        </AuthProvider>
+      </Provider>
     </div>
   );
 }

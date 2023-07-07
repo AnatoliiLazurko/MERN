@@ -4,7 +4,8 @@ import { toast } from "react-toastify";
 
 const initialState = {
     isAuth: false,
-    user: null
+    user: null,
+    status: null
 };
 
 const authReducer = (state, {type, payload}) => {
@@ -13,14 +14,16 @@ const authReducer = (state, {type, payload}) => {
             return {
                 ...state,
                 isAuth: true,
-                user: payload.user
+                user: payload.user,
+                status: true
             }
         
         case 'LOGOUT':
             return {
                 ...state,
                 isAuth: false,
-                user: null
+                user: null,
+                status: null
             }
     
         default:
