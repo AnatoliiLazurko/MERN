@@ -5,8 +5,29 @@ import { toast } from "react-toastify";
 const initialState = {
     isAuth: false,
     user: null,
+};
+
+const initiaLoading = {
     status: null
 };
+
+const loadingReducer = (state, { type, payload }) => {
+    switch (type) {
+        case 'LOADING':
+            return {
+                ...state,
+                status: 'loading'
+            }
+        case 'LOADED':
+            return {
+                ...state,
+                status: 'loaded'
+            }
+    
+        default:
+            return state
+    }
+}
 
 const authReducer = (state, {type, payload}) => {
     switch (type) {
@@ -32,11 +53,14 @@ const authReducer = (state, {type, payload}) => {
 }
 
 const AuthContext = createContext();
+const LoadingContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
+    const [stateLoading, dispatchLoading] = useReducer(loadingReducer, initiaLoading);
 
     const login = async ({ email, password }) => {
+        dispatchLoading({ type: 'LOADING' })
         try {
             const res = await axios.post('http://localhost:4000/api/login', { email, password });
             localStorage.setItem('token', res.data.token);
@@ -46,6 +70,7 @@ export const AuthProvider = ({ children }) => {
             toast(error.response.data.message);
             console.log(error);
         }
+        dispatchLoading({ type: 'LOADED' })
     }
 
     const register = async ({ email, password, username }) => {
@@ -72,6 +97,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const getUser = async () => {
+        dispatchLoading({ type: 'LOADING' })
         const token = localStorage.getItem('token');
         if (token) {
             try {
@@ -92,6 +118,7 @@ export const AuthProvider = ({ children }) => {
         else {
             delete axios.defaults.headers.common['x-auth-token'];
         }
+        dispatchLoading({ type: 'LOADED' })
     }
 
     const getUserInfo = async () => {
@@ -105,7 +132,9 @@ export const AuthProvider = ({ children }) => {
     }, [state]);
 
     return <AuthContext.Provider value={{...state, login, register, logout}}>
-        { children }
+        <LoadingContext value={{...stateLoading}}>
+            {children}
+        </LoadingContext>
     </AuthContext.Provider>;
 }
 

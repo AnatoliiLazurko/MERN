@@ -24,6 +24,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/users" element={<Users />} />
           </Routes>
+
         </AuthProvider>
       </Provider>
     </div>

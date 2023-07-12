@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import useAuth from '../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
+import { LoadingContext } from '../contexts/LoadingContext';
 
 const GuestGuard = ({ children }) => {
-    const { isAuth, status } = useAuth();
+    const { isAuth } = useAuth();
+    const { status } = useContext(LoadingContext);
 
-    if (!isAuth && status !== null) {
+    if (status !== "loaded") return "Loading...";
+
+    if (!isAuth && status === 'loaded') {
         return <Navigate to="/login" />
     }
 
