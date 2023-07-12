@@ -132,9 +132,9 @@ export const AuthProvider = ({ children }) => {
     }, [state]);
 
     return <AuthContext.Provider value={{...state, login, register, logout}}>
-        <LoadingContext value={{...stateLoading}}>
+        <LoadingContext.Provider value={{...stateLoading}}>
             {children}
-        </LoadingContext>
+        </LoadingContext.Provider>
     </AuthContext.Provider>;
 }
 
