@@ -53,7 +53,7 @@ const authReducer = (state, {type, payload}) => {
 }
 
 const AuthContext = createContext();
-const LoadingContext = createContext();
+export const LoadingContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, initialState);

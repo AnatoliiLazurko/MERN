@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import useAuth from '../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
-import { LoadingContext } from '../contexts/LoadingContext';
+import { LoadingContext } from '../contexts/AuthContext';
 
 const GuestGuard = ({ children }) => {
     const { isAuth } = useAuth();
